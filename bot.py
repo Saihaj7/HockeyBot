@@ -2,6 +2,7 @@ import discord
 import random
 import os
 from player import Player
+from game import Game
 from dotenv import load_dotenv
 
 
@@ -72,9 +73,6 @@ async def on_message(message):
             await message.channel.send('SCORED!!!')
         else:
             await message.channel.send('SAVED!!!')
-    #if message.content.startswith('$play'):
-        #await 
-
 
 
 client.run("OTgxNzMxNDQ5NTI0ODQ2NTky.GgGwTE.CspOyoBrN6t01-zM-iqrnC66tRsULqJ8kaeSdE")

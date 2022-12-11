@@ -12,7 +12,7 @@ class Player:
         self.stats['shot'] = random.randint(1, 20)
 
     def __repr__(self):
-        return "Player: {0}, with a shot attribute of {1}".format(self.user, self.stats['shot'])
+        return "Player: {0}, Shot: {1}".format(self.user, self.stats['shot'])
 
     def __str__(self):
         return self.user.name
