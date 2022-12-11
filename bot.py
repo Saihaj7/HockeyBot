@@ -31,6 +31,7 @@ client = discord.Client(intents=intents)
 
 #data = []
 data = {}
+raw_players = []
 
 for user in client.users:
         print(user.name)
@@ -50,6 +51,7 @@ async def on_ready():
             async for member in guild.fetch_members(limit=150):
                 player = Player(member)
                 data[member] = player
+                raw_players.append(member)
 
 @client.event
 async def on_message(message):
@@ -57,12 +59,12 @@ async def on_message(message):
         return
 
     if message.content.startswith("$attribute"):
-        updated = "Your shot is rated {0} (on a scale from 1-20)".format(data[message.author].stats['shot'])
+        updated = "Your shot is rated {0} (1-20)".format(data[message.author].atts['shot'])
         await message.channel.send(updated)
 
     if message.content.startswith("$reroll"):
         data[message.author].reroll()
-        updated = "Your shot is now {0}".format(data[message.author].stats['shot'])
+        updated = "Your shot is now {0}".format(data[message.author].atts['shot'])
         await message.channel.send(updated)
 
     if message.content.startswith('$hello'):
@@ -73,6 +75,9 @@ async def on_message(message):
             await message.channel.send('SCORED!!!')
         else:
             await message.channel.send('SAVED!!!')
+    if message.content.startswith('$play'):
+        game = Game(raw_players[:10])
+        await game.play(message)
 
 
 client.run("OTgxNzMxNDQ5NTI0ODQ2NTky.GgGwTE.CspOyoBrN6t01-zM-iqrnC66tRsULqJ8kaeSdE")
