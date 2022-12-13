@@ -21,6 +21,8 @@ class Player:
     def reroll(self):
         self.atts['shot'] = int(X.rvs())
         #self.atts['shot'] = random.randint(1, 20)
+    def shot_val(self):
+        return self.atts['shot']
 
     def __repr__(self):
         return "Player: {0}, Shot: {1}".format(self.user, self.atts['shot'])

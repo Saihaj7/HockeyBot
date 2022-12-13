@@ -28,8 +28,6 @@ client = discord.Client(intents=intents)
 
 #write data to text file
 
-
-#data = []
 data = {}
 raw_players = []
 
@@ -75,8 +73,8 @@ async def on_message(message):
             await message.channel.send('SCORED!!!')
         else:
             await message.channel.send('SAVED!!!')
-    if message.content.startswith('$play'):
-        game = Game(raw_players[:10])
+    if message.content.startswith('$play') and len(raw_players) >= 10:
+        game = Game(raw_players[:10], data)
         await game.play(message)
 
 
