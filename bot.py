@@ -8,10 +8,13 @@ import random
 from time import sleep
 
 
-intents = discord.Intents(messages=True, guilds=True, typing=True)
-intents.message_content = True
-intents.members = True
-intents.guilds = True
+#intents = discord.Intents(messages=True, guilds=True, typing=True)
+#intents.message_content = True
+#intents.members = True
+#intents.guilds = True
+#intents.all()
+
+intents = discord.Intents().all()
 
 client = discord.Client(intents=intents)
 
@@ -33,25 +36,45 @@ client = discord.Client(intents=intents)
 data = {}
 raw_players = []
 
-for user in client.users:
-        print(user.name)
-        if user not in data:
-            player = Player(user)
-            data['user'] = player
+#for user in client.users:
+        #print(user.name)
+        #if user not in data:
+            #player = Player(user)
+            #data['user'] = player
 
 
 
 
+
+# @client.event
+# async def on_ready():
+#     print('We have logged in as {0.user}'.format(client))
+#     async for guild in client.fetch_guilds(limit=150):
+#         if guild.name == "The Dog Pound":
+#             await print(guild.fetch_roles())
+#             async for member in guild.fetch_members(limit=150):
+#                 #print(member.status)
+
+#                 for role in member.roles:
+#                     if role is not None and role.name == "Hockey Players":
+#                         player = Player(member)
+#                         data[member] = player
+#                         raw_players.append(member)
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-    async for guild in client.fetch_guilds(limit=150):
+    for guild in client.guilds:
         if guild.name == "The Dog Pound":
-            async for member in guild.fetch_members(limit=150):
-                player = Player(member)
-                data[member] = player
-                raw_players.append(member)
+            for member in guild.members:
+                for role in member.roles:
+                    print(role.name)
+                    if role is not None and role.name == "Hockey Players":
+                        player = Player(member)
+                        data[member] = player
+                        raw_players.append(member)
+
+
 
 @client.event
 async def on_message(message):
@@ -80,13 +103,13 @@ async def on_message(message):
             await message.channel.send('SCORED!!!')
         else:
             await message.channel.send('SAVED!!!')
+    if message.content.startswith('$play1') and len(raw_players) >= 10:
+        players = random.sample(raw_players, 10)
+        game = Game(players, data)
+        await game.play1(message)
     if message.content.startswith('$play') and len(raw_players) >= 10:
         players = random.sample(raw_players, 10)
-        for player in players:
-            print(data[player])
         game = Game(players, data)
-
-        #game = Game(raw_players[:10], data)
         await game.play(message)
 
 
