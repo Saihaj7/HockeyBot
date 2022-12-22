@@ -4,6 +4,8 @@ import os
 from player import Player
 from game import Game
 from dotenv import load_dotenv
+import random
+from time import sleep
 
 
 intents = discord.Intents(messages=True, guilds=True, typing=True)
@@ -57,6 +59,7 @@ async def on_message(message):
         return
 
     if message.content.startswith("$attribute"):
+        #if message.mentions
         updated = "Your shot is rated {0} (1-20)".format(data[message.author].atts['shot'])
         await message.channel.send(updated)
 
@@ -66,7 +69,11 @@ async def on_message(message):
         await message.channel.send(updated)
 
     if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+        #test_msg = message.channel.send('Hello!')
+        #await test_msg
+        #sleep(2)
+        test = await message.channel.send('Hello!')
+        await test.edit(content=test.content+'\nBye!')
     if message.content.startswith('$shoot'):
         score = random.random()
         if score > 0.7:
@@ -74,7 +81,12 @@ async def on_message(message):
         else:
             await message.channel.send('SAVED!!!')
     if message.content.startswith('$play') and len(raw_players) >= 10:
-        game = Game(raw_players[:10], data)
+        players = random.sample(raw_players, 10)
+        for player in players:
+            print(data[player])
+        game = Game(players, data)
+
+        #game = Game(raw_players[:10], data)
         await game.play(message)
 
 

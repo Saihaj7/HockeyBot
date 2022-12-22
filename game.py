@@ -24,23 +24,23 @@ class Game:
         self.data = data
 
     async def play1(self, message):
-        await message.channel.send("Team 1 vs Team 2:")
-        for shot in range(30): #takes a shot a minute
+        msg = await msg.edit(content=msg.content+"\nTeam 1 vs Team 2:")
+        for shot in range(30): #event every 2 "minutes"
             await sleep(1)
             if random.random() > 0.8:
                 if random.randint(1, 2) == 1:
-                    await message.channel.send("Team 1 scores!")
+                    await msg.edit(content=msg.content+"\nTeam 1 scores!")
                     self.score[0] = self.score[0] + 1
                 else:
-                    await message.channel.send("Team 2 scores!")
+                    await msg.edit(content=msg.content+"\nTeam 2 scores!")
                     self.score[1] = self.score[1] + 1
-        await message.channel.send("Final Score: {0}-{1}".format(self.score[0], self.score[1]))
+        await msg.edit(content=msg.content+"\nFinal Score: {0}-{1}".format(self.score[0], self.score[1]))
 
 
     async def play(self, message):
-        await message.channel.send("Team 1 vs Team 2:")
+        msg = await message.channel.send("Team 1 vs Team 2:")
         for shot in range(15): #event each minute
-            #await sleep(1)
+            await sleep(2)
             event = random.random()
             player1 = self.data[self.team1[random.randint(0, 4)]]
             player2 = self.data[self.team2[random.randint(0, 4)]]
@@ -48,30 +48,30 @@ class Game:
                 if random.randint(1, 2) == 1: #Team1
                     player_xG = (player1.shot_val() / 10) * xG.rvs()
                     if random.random() < player_xG: #GOAL
-                        await message.channel.send("T1 Goal scored by {0}".format(player1.user.name))
+                        msg = await msg.edit(content=msg.content+"\nT1 Goal scored by {0}".format(player1.user.display_name))
                         self.score[0] = self.score[0] + 1
                 else:                           #Team2
                     player_xG = (player2.shot_val() / 10) * xG.rvs()
                     if random.random() < player_xG: #GOAL
-                        await message.channel.send("T2 Goal scored by {0}".format(player2.user.name))
+                        msg = await msg.edit(content=msg.content+"\nT2 Goal scored by {0}".format(player2.user.display_name))
                         self.score[1] = self.score[1] + 1
             elif event <= 0.8: #HIT
                 if random.randint(1, 2) == 1: #Team1
-                    await message.channel.send("{0} hit {1}".format(player1.user.name, player2.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} hit {1}".format(player1.user.display_name, player2.user.display_name))
                 else: #TEAM2
-                    await message.channel.send("{0} hit {1}".format(player2.user.name, player1.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} hit {1}".format(player2.user.display_name, player1.user.display_name))
             elif event <= 0.9: #TAKEAWAY
                 if random.randint(1, 2) == 1: #Team1
-                    await message.channel.send("{0} took the puck away from {1}".format(player1.user.name, player2.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} took the puck away from {1}".format(player1.user.display_name, player2.user.display_name))
                 else: #TEAM2
-                    await message.channel.send("{0} took the puck away from {1}".format(player2.user.name, player1.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} took the puck away from {1}".format(player2.user.display_name, player1.user.display_name))
             else:               #BLOCK
                 if random.randint(1, 2) == 1: #Team1
-                    await message.channel.send("{0} blocked a shot!".format(player1.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} blocked a shot!".format(player1.user.display_name))
                 else: #TEAM2
-                    await message.channel.send("{0} blocked a shot!".format(player2.user.name))
+                    msg = await msg.edit(content=msg.content+"\n{0} blocked a shot!".format(player2.user.display_name))
 
-        await message.channel.send("Final Score: {0}-{1}".format(self.score[0], self.score[1]))
+        msg = await msg.edit(content=msg.content+"\nFinal Score: {0}-{1}".format(self.score[0], self.score[1]))
 
 
 # xG could be first pick the distribution value, weight it by shot,
@@ -81,3 +81,7 @@ class Game:
 
 # time of event
 #missed shot messages
+
+
+# edit the original message so no spam.......\n
+# positions? passing plays a role in assists
