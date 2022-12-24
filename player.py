@@ -16,7 +16,7 @@ X = get_truncated_normal(mean=10, sd=2, low=1, upp=20)
 class Player:
     def __init__(self, user):
         self.user = user
-        self.atts = {'shot': int(X.rvs())}
+        self.atts = {'shot': int(X.rvs()), 'save': int(X.rvs())}
 
     def reroll(self):
         self.atts['shot'] = int(X.rvs())

@@ -31,7 +31,7 @@ client = discord.Client(intents=intents)
 # passing: teammate goal odds
 
 
-#write data to text file
+#write data to text file?
 
 data = {}
 raw_players = []
@@ -103,12 +103,8 @@ async def on_message(message):
             await message.channel.send('SCORED!!!')
         else:
             await message.channel.send('SAVED!!!')
-    if message.content.startswith('$play1') and len(raw_players) >= 10:
-        players = random.sample(raw_players, 10)
-        game = Game(players, data)
-        await game.play1(message)
-    if message.content.startswith('$play') and len(raw_players) >= 10:
-        players = random.sample(raw_players, 10)
+    if message.content.startswith('$play') and len(raw_players) >= 12:
+        players = random.sample(raw_players, 12)
         game = Game(players, data)
         await game.play(message)
 
