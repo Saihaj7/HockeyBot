@@ -68,7 +68,6 @@ async def on_ready():
         if guild.name == "The Dog Pound":
             for member in guild.members:
                 for role in member.roles:
-                    print(role.name)
                     if role is not None and role.name == "Hockey Players":
                         player = Player(member)
                         data[member] = player
