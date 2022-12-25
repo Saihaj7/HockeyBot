@@ -13,9 +13,10 @@ from time import sleep
 #intents.members = True
 #intents.guilds = True
 #intents.all()
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents().all()
-
 client = discord.Client(intents=intents)
 
 
@@ -35,31 +36,6 @@ client = discord.Client(intents=intents)
 
 data = {}
 raw_players = []
-
-#for user in client.users:
-        #print(user.name)
-        #if user not in data:
-            #player = Player(user)
-            #data['user'] = player
-
-
-
-
-
-# @client.event
-# async def on_ready():
-#     print('We have logged in as {0.user}'.format(client))
-#     async for guild in client.fetch_guilds(limit=150):
-#         if guild.name == "The Dog Pound":
-#             await print(guild.fetch_roles())
-#             async for member in guild.fetch_members(limit=150):
-#                 #print(member.status)
-
-#                 for role in member.roles:
-#                     if role is not None and role.name == "Hockey Players":
-#                         player = Player(member)
-#                         data[member] = player
-#                         raw_players.append(member)
 
 @client.event
 async def on_ready():
@@ -108,4 +84,4 @@ async def on_message(message):
         await game.play(message)
 
 
-client.run("OTgxNzMxNDQ5NTI0ODQ2NTky.GgGwTE.CspOyoBrN6t01-zM-iqrnC66tRsULqJ8kaeSdE")
+client.run(TOKEN)
