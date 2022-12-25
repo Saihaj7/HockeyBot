@@ -1,19 +1,14 @@
 import discord
+from discord.ext import tasks
 import random
 import os
 from player import Player
 from game import Game
 from dotenv import load_dotenv
 import random
-from time import sleep
 import datetime
+from asyncio import sleep
 
-
-#intents = discord.Intents(messages=True, guilds=True, typing=True)
-#intents.message_content = True
-#intents.members = True
-#intents.guilds = True
-#intents.all()
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
@@ -37,6 +32,7 @@ client = discord.Client(intents=intents)
 
 data = {}
 raw_players = []
+#gametime = datetime.time(hour=19, minute=0, second = 0) # 7pm = 19, 0, 0
 
 @client.event
 async def on_ready():
@@ -49,6 +45,9 @@ async def on_ready():
                         player = Player(member)
                         data[member] = player
                         raw_players.append(member)
+    called_once_a_day_at_7.start()
+    print("daily function called")
+    
 
 
 
@@ -80,6 +79,33 @@ async def on_message(message):
         players = random.sample(raw_players, 12)
         game = Game(players, data)
         await game.play(message)
+    if message.content.startswith('$channelset'):
+        disc_msg = message.channel
+
+@tasks.loop(hours = 24)
+async def called_once_a_day_at_7():
+    for guild in client.guilds:
+        #if guild.name == "":
+            for channel in guild.channels:
+                if channel.name == 'bot-talk':
+                    disc_msg = await channel.send("--DAILY GAME--")
+    players = random.sample(raw_players, 12)
+    game = Game(players, data)
+    await game.play(disc_msg)
+
+
+@called_once_a_day_at_7.before_loop
+async def before_called_once_a_day_at_7():
+        await client.wait_until_ready()
+        print("client finished waiting")
+
+        now = datetime.now()
+        future = datetime(now.year, now.month, now.day, now.hour, now.minute+1)
+        diff = (future - now).total_seconds()
+
+        print('sleeping')
+        await sleep(diff)
+        print('slept')
 
 
 client.run(TOKEN)
