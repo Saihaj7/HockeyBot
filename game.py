@@ -29,23 +29,6 @@ class Game:
             self.team2 = players[6:]
             self.goalie1 = self.data[self.team1[-1]]
             self.goalie2 = self.data[self.team2[-1]]
-            #self.team11 = []
-            #self.team22 = []
-
-    async def play2(self, message):
-        msg = await msg.edit(content=msg.content+"\nTeam 1 vs Team 2:")
-        for shot in range(30): #event every 2 "minutes"
-            await sleep(1)
-            if random.random() > 0.8:
-                if random.randint(1, 2) == 1:
-                    await msg.edit(content=msg.content+"\nTeam 1 scores!")
-                    self.score[0] = self.score[0] + 1
-                else:
-                    await msg.edit(content=msg.content+"\nTeam 2 scores!")
-                    self.score[1] = self.score[1] + 1
-        await msg.edit(content=msg.content+"\nFinal Score: {0}-{1}".format(self.score[0], self.score[1]))
-
-
 
     async def play(self, message):
         score = await message.channel.send("-----SCORE-----\n{4}: {0} --- {5}: {1}\n-----SHOTS-----\n{4}: {2} --- {5}: {3}".format(self.score[0], self.score[1], self.shots[0], self.shots[1], self.team_names[0], self.team_names[1]))
@@ -62,23 +45,23 @@ class Game:
             event = random.random()                                     
             player1 = self.data[self.team1[random.randint(0, 4)]] #grabs Player object
             player2 = self.data[self.team2[random.randint(0, 4)]] #grabs Player object
-            if event <= 0.8: #SHOT
+            if event <= 0.85: #SHOT
                 if random.randint(1, 2) == 1: #Team1
                     self.shots[0] = self.shots[0] + 1
                     player_xG = (player1.shot_val() / 10) * xG.rvs()
                     if random.random() < player_xG: #GOAL
                         msg = await msg.edit(content=msg.content+"\n:rotating_light:{2} Goal scored by {0} on {1}:rotating_light:".format(player1.user.display_name, self.goalie2.user.display_name, self.team_names[0]))
                         self.score[0] = self.score[0] + 1
-                    #score = await score.edit(content="-----SCORE-----\n{4}: {0} --- {5}: {1}\n-----SHOTS-----\n{4}: {2} --- {5}: {3}".format(self.score[0], self.score[1], self.shots[0], self.shots[1], self.team_names[0], self.team_names[1]))
+                    
                 else:                           #Team2
                     self.shots[1] = self.shots[1] + 1
                     player_xG = (player2.shot_val() / 10) * xG.rvs()
                     if random.random() < player_xG: #GOAL
                         msg = await msg.edit(content=msg.content+"\n:rotating_light:{2} Goal scored by {0} on {1}:rotating_light:".format(player2.user.display_name, self.goalie1.user.display_name, self.team_names[1]))
                         self.score[1] = self.score[1] + 1
-                    #score = await score.edit(content="-----SCORE-----\n{4}: {0} --- {5}: {1}\n-----SHOTS-----\n{4}: {2} --- {5}: {3}".format(self.score[0], self.score[1], self.shots[0], self.shots[1], self.team_names[0], self.team_names[1]))
+                    
                 score = await score.edit(content="-----SCORE-----\n{4}: {0} --- {5}: {1}\n-----SHOTS-----\n{4}: {2} --- {5}: {3}".format(self.score[0], self.score[1], self.shots[0], self.shots[1], self.team_names[0], self.team_names[1]))
-            elif event <= 0.85: #HIT
+            elif event <= 0.9: #HIT
                 if random.randint(1, 2) == 1: #Team1
                     msg = await msg.edit(content=msg.content+"\n{0} hit {1}".format(player1.user.display_name, player2.user.display_name))
                 else: #TEAM2
@@ -119,7 +102,6 @@ class Game:
 
 # on play() return it gives you stats then they can enter stats request
 #Overtime
-#team names TOR MTL DET 
 
 # $event to see wall of text
 #goalie pulls

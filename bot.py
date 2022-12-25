@@ -6,6 +6,7 @@ from game import Game
 from dotenv import load_dotenv
 import random
 from time import sleep
+import datetime
 
 
 #intents = discord.Intents(messages=True, guilds=True, typing=True)
@@ -67,9 +68,6 @@ async def on_message(message):
         await message.channel.send(updated)
 
     if message.content.startswith('$hello'):
-        #test_msg = message.channel.send('Hello!')
-        #await test_msg
-        #sleep(2)
         test = await message.channel.send('Hello!')
         await test.edit(content=test.content+'\nBye!')
     if message.content.startswith('$shoot'):
