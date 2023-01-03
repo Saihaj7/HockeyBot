@@ -19,13 +19,13 @@ The bot is now hosted using the Heroku's cloud services! Originally I was hoping
 
 ## Future Developments
 
-Current log of features for the future are as follows:
+Current log of features for the future are as follows:\
 
--Penalties
--Assists
--Stats (and command to request your stats)
--Overtime
--Goalie Pulls
--Event for fights
--Making it universally available
--Port to Twitter? 
+-Penalties\
+-Assists\
+-Stats (and command to request your stats)\
+-Overtime\
+-Goalie Pulls\
+-Event for fights\
+-Making it universally available\
+-Port to Twitter? \
