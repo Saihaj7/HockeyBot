@@ -21,7 +21,7 @@ The bot is now hosted using the Heroku's cloud services! Originally I was hoping
 
 Current log of features for the future are as follows:
 
--Attributes will play a role in other events beyond shots
+-Attributes will play a role in other events beyond shots \
 -Penalties\
 -Assists\
 -Stats (and command to request your stats)\
