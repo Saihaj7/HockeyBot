@@ -11,7 +11,7 @@ def get_truncated_normal(mean=0, sd=1, low=0, upp=20):
         
 X = get_truncated_normal(mean=10, sd=2, low=1, upp=20)
 
-#shot = modifys the expected value for a shot either negatively or positively depending on how good the shot is
+#shot = modifys the expected value for a shot either negatively or positively depending on how good the shot is DONE
 #passing = % of getting assist
 #strength = % of getting takeaway, % of winning a fight when I add those
 #save = changes the expected goal value similar to shot but inverse
