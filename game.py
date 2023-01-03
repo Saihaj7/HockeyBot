@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 from scipy.stats import truncnorm
 from asyncio import sleep
 
-def get_truncated_normal(mean=0, sd=1, low=0, upp=20):
+# probability distribution for expected goals for shots that are taken, tried to get a semi realistic balance between shot totals and goals
+def get_truncated_normal(mean=0, sd=1, low=0, upp=20):  
     return truncnorm(
         (low - mean) / sd, (upp - mean) / sd, loc=mean, scale=sd)
         
@@ -19,15 +20,13 @@ TEAMS = ['BOS', 'BUF', 'CAR', 'CBJ', 'DET', 'FLA', 'MTL', 'NJD', 'NYI', 'NYR', '
 
 class Game:
     def __init__(self, players, data):
-        #self.players = players
-        #self.players = []
         self.score = [0, 0] # [0] = score for t1, [1] = score for t2
         self.shots = [0, 0] # ^^^
         self.data = data
         self.team_names = random.sample(TEAMS, 2)
         if len(players) >= 12:
             self.team1 = players[:6]
-            self.team2 = players[6:]
+            self.team2 = players[6:]                    # I feel like this could be way better
             self.goalie1 = self.data[self.team1[-1]]
             self.goalie2 = self.data[self.team2[-1]]
 
@@ -42,7 +41,7 @@ class Game:
         msg = await message.channel.send("The puck has been dropped between {0} and {1}!!!".format(self.team_names[0], self.team_names[1]))
         for minute in range(60): #event each minute
             #await sleep(1)
-            clock = await clock.edit(content="PERIOD {0}: {1}:00".format(1 + minute // 20, 20 - minute % 20))
+            clock = await clock.edit(content="PERIOD {0}: {1}:00".format(1 + minute // 20, 20 - minute % 20)) #GAME TIME
             event = random.random()                                     
             player1 = self.data[self.team1[random.randint(0, 4)]] #grabs Player object
             player2 = self.data[self.team2[random.randint(0, 4)]] #grabs Player object
@@ -77,35 +76,7 @@ class Game:
                     msg = await msg.edit(content=msg.content+"\n{0} blocked a shot!".format(player1.user.display_name))
                 else: #TEAM2
                     msg = await msg.edit(content=msg.content+"\n{0} blocked a shot!".format(player2.user.display_name))
-
+        #FINAL MESSAGES
         clock = await clock.edit(content="PERIOD 3: 00:00")
         msg = await msg.edit(content=msg.content+"\n\nFinal Score: {0}-{1}".format(self.score[0], self.score[1]))
         msg = await msg.edit(content=msg.content+"\nShot Totals: {0}-{1}".format(self.shots[0], self.shots[1]))
-
-
-# xG could be first pick the distribution value, weight it by shot,
-#  then take random.random() and if it lands on the range 1 - xG it is then a goal
-# but what about other events like takeaways and hits? 
-# maybe those should be their own random, and if number between range it will be a shot, takeaway, or a hit
-
-
-# positions? passing plays a role in assists
-
-#fights 
-#powerplays
-#edit play by play messages
-
-#assists
-#periods?
-#rosters into a single message
-#CLOCK IN SCOREBOARD
-
-
-# on play() return it gives you stats then they can enter stats request
-#Overtime
-
-# $event to see wall of text
-#goalie pulls
-
-
-#stay tuned for a 7pm puck drop!! message

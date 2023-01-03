@@ -16,23 +16,9 @@ intents = discord.Intents().all()
 client = discord.Client(intents=intents)
 
 
-# stats and positions, reroll stats?
-# simulated goals and stat lines
-# chance of goal every 2 minutes
-
-# shot, skating, stickhandling, passing, strength
-# shot: goal odds
-# skating: goal odds, breakaways?
-# stickhandling: goal odds, passing, turnovers
-# strength: turnovers
-# passing: teammate goal odds
-
-
-#write data to text file?
-
 data = {}
 raw_players = []
-#gametime = datetime.time(hour=19, minute=0, second = 0) # 7pm = 19, 0, 0
+gametime = datetime.time(hour=0, minute=0)
 
 @client.event
 async def on_ready():
@@ -46,7 +32,6 @@ async def on_ready():
                         data[member] = player
                         raw_players.append(member)
     called_once_a_day_at_7.start()
-    print("daily function called")
     
 
 
@@ -56,20 +41,19 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith("$attribute"):
-        #if message.mentions
+    if message.content.startswith("$attribute"): # Change to return all atts
         updated = "Your shot is rated {0} (1-20)".format(data[message.author].atts['shot'])
         await message.channel.send(updated)
 
-    if message.content.startswith("$reroll"):
+    if message.content.startswith("$reroll"): #REMOVE THIS COMMAND (or only make it available to myself to make my player better hehehe)
         data[message.author].reroll()
         updated = "Your shot is now {0}".format(data[message.author].atts['shot'])
         await message.channel.send(updated)
 
-    if message.content.startswith('$hello'):
+    if message.content.startswith('$hello'):    #REMOVE THIS COMMAND ,basic code from the API example
         test = await message.channel.send('Hello!')
         await test.edit(content=test.content+'\nBye!')
-    if message.content.startswith('$shoot'):
+    if message.content.startswith('$shoot'):         #REMOVE THIS COMMAND, original base version of this bot, super simple 
         score = random.random()
         if score > 0.7:
             await message.channel.send('SCORED!!!')
@@ -79,13 +63,13 @@ async def on_message(message):
         players = random.sample(raw_players, 12)
         game = Game(players, data)
         await game.play(message)
-    if message.content.startswith('$channelset'):
-        disc_msg = message.channel
 
-@tasks.loop(hours = 24)
+
+
+@tasks.loop(time = gametime)
 async def called_once_a_day_at_7():
+    print("7:00pm EST")
     for guild in client.guilds:
-        #if guild.name == "":
             for channel in guild.channels:
                 if channel.name == 'bot-talk':
                     disc_msg = await channel.send("--DAILY GAME--")
@@ -98,14 +82,6 @@ async def called_once_a_day_at_7():
 async def before_called_once_a_day_at_7():
         await client.wait_until_ready()
         print("client finished waiting")
-
-        now = datetime.now()
-        future = datetime(now.year, now.month, now.day, now.hour, now.minute+1)
-        diff = (future - now).total_seconds()
-
-        print('sleeping')
-        await sleep(diff)
-        print('slept')
 
 
 client.run(TOKEN)
