@@ -2,10 +2,28 @@
 
 A Discord bot made using the API to simulate hockey games with server members as players, originally created for use within a friends Discord server!!
 
-## Installation
+## Adding to Server
 
-Not yet available for everybody!!! 
+Currently the bot is not available for all, but when it is, admins will be able to customize game start times and players and so on
+
+## Changelog
+
+# Scheduled Games
+Games are now played automatically at 7pm EST every day within the servers bot channel with randomized teams
+
+# Hosting
+The bot is now hosted using the Heroku's cloud services! Originally I was hoping to host on a Raspberry Pi but they're not available due to computer chip shortages but I always wanted to experiment with the cloud so it's not the worst outcome
+
 
 ## Future Developments
 
-Lots of features planned for the future, many of them written in my comments in the code. For now I'm prioritized on getting it to a point where it can play games on it's own so I can host it in the cloud so my friends can use it
+Current log of features for the future are as follows:
+
+-Penalties
+-Assists
+-Stats (and command to request your stats)
+-Overtime
+-Goalie Pulls
+-Event for fights
+-Making it universally available
+-Port to Twitter? 
