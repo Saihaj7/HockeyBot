@@ -8,18 +8,18 @@ Currently the bot is not available for all, but when it is, admins will be able 
 
 ## Changelog
 
-Scheduled Games:
+**Scheduled Games:**
 
 Games are now played automatically at 7pm EST every day within the servers bot channel with randomized teams
 
-Hosting:
+**Hosting:**
 
 The bot is now hosted using the Heroku's cloud services! Originally I was hoping to host on a Raspberry Pi but they're not available due to computer chip shortages but I always wanted to experiment with the cloud so it's not the worst outcome
 
 
 ## Future Developments
 
-Current log of features for the future are as follows:\
+Current log of features for the future are as follows:
 
 -Penalties\
 -Assists\
@@ -28,4 +28,4 @@ Current log of features for the future are as follows:\
 -Goalie Pulls\
 -Event for fights\
 -Making it universally available\
--Port to Twitter? \
+-Port to Twitter? 
