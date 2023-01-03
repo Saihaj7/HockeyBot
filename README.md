@@ -21,11 +21,13 @@ The bot is now hosted using the Heroku's cloud services! Originally I was hoping
 
 Current log of features for the future are as follows:
 
+-Attributes will play a role in other events beyond shots
 -Penalties\
 -Assists\
 -Stats (and command to request your stats)\
 -Overtime\
 -Goalie Pulls\
 -Event for fights\
+-Practice feature to let players play mini games to improve their stats?\
 -Making it universally available\
 -Port to Twitter? 
