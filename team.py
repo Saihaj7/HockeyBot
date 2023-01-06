@@ -4,14 +4,15 @@ import os
 from dotenv import load_dotenv
 from scipy.stats import truncnorm
 
-class Team:
+class Team: #rough class outline for later if needed
 
-    def __init__(self, players, goalie):
+    def __init__(self, players, goalie, name):
         if len(players) == 6:
             self.players = players
         self.state = 5 #players on the ice, don't forget to change event odds depending on game state, i.e. make shots unlikely for pk team, opposite for pp team
         self.goalie = goalie
         self.skaters = players[:5] # self.players exluding those in penalty box and goalie
+        self.name = name
 
     def get_players(self):
         return self.players
@@ -25,7 +26,7 @@ class Team:
     def get_goalie(self):
         return self.goalie
 
-    def penalty(self, player):
+    def toggle_penalty(self, player):
         if player not in self.skating: #returns player 
             self.skating.append(player)
             self.state = self.state + 1

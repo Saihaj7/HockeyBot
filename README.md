@@ -24,7 +24,7 @@ Current log of features for the future are as follows:
 -Attributes will play a role in other events beyond shots \
 -Penalties\
 -Assists\
--Stats (and command to request your stats)\
+-Stats (and command to request your stats), saved in a database to stick around if bot reboots \
 -Overtime\
 -Goalie Pulls\
 -Event for fights\
